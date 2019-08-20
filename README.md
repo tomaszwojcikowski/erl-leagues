@@ -1,21 +1,13 @@
 # Derivico
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `derivico` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:derivico, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/derivico](https://hexdocs.pm/derivico).
+Div = League Division
+Date = Match Date (dd/mm/yy)
+HomeTeam = Home Team
+AwayTeam = Away Team
+FTHG and HG = Full Time Home Team Goals
+FTAG and AG = Full Time Away Team Goals
+FTR and Res = Full Time Result (H=Home Win, D=Draw, A=Away Win)
+HTHG = Half Time Home Team Goals
+HTAG = Half Time Away Team Goals
+HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win
 
