@@ -9,8 +9,11 @@ defmodule Derivico.Application do
     :ok = Derivico.load
     # List all child processes to be supervised
     children = [
-      # Starts a worker by calling: Derivico.Worker.start_link(arg)
-      # {Derivico.Worker, arg}
+      Plug.Cowboy.child_spec(
+        scheme: :http,
+        plug: Derivico.Api,
+        options: [port: 8000]
+      )
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

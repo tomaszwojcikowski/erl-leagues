@@ -19,14 +19,27 @@ defmodule Derivico do
     :headers |> :ets.tab2list |> List.first
   end
 
-  @spec get_data :: [tuple]
+  @spec get_data :: [map]
   def get_data do
-    :data |> :ets.tab2list
+    :data |> :ets.tab2list |> to_map
   end
   # {"", "Div", "Season", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG", "HTR"}
-  @spec get_data(binary(), binary()) :: [tuple()]
+  @spec get_data(binary, binary) :: [map]
   def get_data div, season do
-    :ets.match_object :data, {:_, div, season, :_, :_, :_, :_, :_, :_, :_, :_, :_}
+    d = :ets.match_object :data, {:_, div, season, :_, :_, :_, :_, :_, :_, :_, :_, :_}
+    case d do
+      [] -> [];
+      _ ->
+        to_map(d)
+    end
+  end
+
+  @spec to_map([tuple]) :: [map]
+  def to_map results do
+    h = get_headers() |> :erlang.tuple_to_list
+    results |> Enum.map(fn tuple ->
+      [h, :erlang.tuple_to_list(tuple)] |> List.zip |> Map.new
+    end)
   end
 
 end

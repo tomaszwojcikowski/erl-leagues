@@ -22,7 +22,9 @@ defmodule Derivico.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:csv, "~> 2.3"}
-      ]
+      {:csv, "~> 2.3"},
+      {:plug_cowboy, "~> 2.1"},
+      {:poison, "~> 4.0"}
+    ]
   end
 end
