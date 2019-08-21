@@ -12,6 +12,11 @@ defmodule Derivico.Application do
         scheme: :http,
         plug: Derivico.Api.JSON,
         options: [port: 8000]
+      ),
+      Plug.Cowboy.child_spec(
+        scheme: :http,
+        plug: Derivico.Api.Proto,
+        options: [port: 8001]
       )
     ]
 
