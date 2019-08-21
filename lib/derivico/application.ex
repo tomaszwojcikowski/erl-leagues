@@ -6,7 +6,7 @@ defmodule Derivico.Application do
   use Application
 
   def start(_type, _args) do
-    :ok = Derivico.load
+    :ok = Derivico.load()
     # List all child processes to be supervised
     children = [
       Plug.Cowboy.child_spec(

@@ -20,11 +20,13 @@ defmodule Derivico.Api do
       case conn.body_params do
         %{"div" => div, "season" => season} ->
           {200, Derivico.get_data(div, season)}
-        _ -> {200, Derivico.get_data}
-      end
-    send_resp(conn, status, body |> Poison.encode!)
-  end
 
+        _ ->
+          {200, Derivico.get_data()}
+      end
+
+    send_resp(conn, status, body |> Poison.encode!())
+  end
 
   # A catchall route, 'match' will match no matter the request method,
   # so a response is always returned, even if there is no route to match.
