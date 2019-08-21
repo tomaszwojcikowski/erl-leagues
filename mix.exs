@@ -14,7 +14,7 @@ defmodule Derivico.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :exprotobuf, :logger_file_backend],
       mod: {Derivico.Application, []}
     ]
   end
@@ -24,7 +24,9 @@ defmodule Derivico.MixProject do
     [
       {:csv, "~> 2.3"},
       {:plug_cowboy, "~> 2.1"},
-      {:poison, "~> 4.0"}
+      {:poison, "~> 4.0"},
+      {:exprotobuf, "~> 1.2"},
+      {:logger_file_backend, "~> 0.0.11"}
     ]
   end
 end

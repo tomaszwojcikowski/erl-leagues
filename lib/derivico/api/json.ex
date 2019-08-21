@@ -1,4 +1,5 @@
-defmodule Derivico.Api do
+defmodule Derivico.Api.JSON do
+  require Logger
   use Plug.Router
   plug(Plug.Logger)
   # responsible for matching routes
@@ -31,6 +32,6 @@ defmodule Derivico.Api do
   # A catchall route, 'match' will match no matter the request method,
   # so a response is always returned, even if there is no route to match.
   match _ do
-    send_resp(conn, 404, "oops... Nothing here :(")
+    send_resp(conn, 404, "Not found")
   end
 end
