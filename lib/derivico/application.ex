@@ -7,6 +7,7 @@ defmodule Derivico.Application do
 
   def start(_type, _args) do
     :ok = Derivico.load()
+
     children = [
       Plug.Cowboy.child_spec(
         scheme: :http,

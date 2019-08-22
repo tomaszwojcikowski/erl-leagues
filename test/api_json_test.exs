@@ -1,4 +1,4 @@
-defmodule Derivico.ApiTest do
+defmodule Derivico.ApiJSONTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
@@ -53,5 +53,4 @@ defmodule Derivico.ApiTest do
     conn = Derivico.Api.JSON.call(conn, @opts)
     assert conn.status == 404
   end
-
 end
