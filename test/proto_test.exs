@@ -33,6 +33,6 @@ defmodule Derivico.ProtoTest do
     }
 
     proto = Derivico.Api.Proto.Encoder.data_to_proto([entry])
-    assert %Derivico.Api.Msg.Data{entries: [p_entry]} == proto
+    assert Kernel.match?(%Derivico.Api.Msg.Data{entries: [p_entry], timestamp: _}, proto)
   end
 end

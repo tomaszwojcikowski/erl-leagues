@@ -1,5 +1,7 @@
 defmodule Derivico.Api.Msg do
   use Protobuf, """
+    syntax = "proto3";
+
     message Data {
       message Entry {
         required string id = 1;
@@ -17,6 +19,7 @@ defmodule Derivico.Api.Msg do
       }
 
       repeated Entry entries = 1;
+      required string timestamp = 2;
     }
     message Request {
         required string Season = 1;
@@ -89,7 +92,8 @@ defmodule Derivico.Api.Proto.Encoder do
 
   @spec data_to_proto([map]) :: Derivico.Api.Msg.Data.t()
   def data_to_proto(data) when is_list(data) do
-    %Derivico.Api.Msg.Data{entries: Enum.map(data, &entry_to_proto/1)}
+    ts = DateTime.utc_now |> DateTime.to_iso8601
+    %Derivico.Api.Msg.Data{entries: Enum.map(data, &entry_to_proto/1), timestamp: ts}
   end
 
   def encode(msg) do
