@@ -26,7 +26,8 @@ defmodule Derivico.ApiProtoTest do
   end
 
   test "some data" do
-    conn = conn(:post, "/data", %{"div" => "SP2", "season" => "201617"})
+    d = %Derivico.Api.Msg.Request{Div: "SP2", Season: "201617"}
+    conn = conn(:post, "/data", Derivico.Api.Msg.Request.encode(d))
     conn = Derivico.Api.Proto.call(conn, @opts)
     assert conn.status == 200
     r = Derivico.Api.Msg.Data.decode(conn.resp_body)

@@ -7,7 +7,10 @@ defmodule Derivico.MixProject do
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      dialyzer: [
+        plt_add_deps: :transitive
+      ]
     ]
   end
 
@@ -26,7 +29,8 @@ defmodule Derivico.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:poison, "~> 4.0"},
       {:exprotobuf, "~> 1.2"},
-      {:logger_file_backend, "~> 0.0.11"}
+      {:logger_file_backend, "~> 0.0.11"},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end

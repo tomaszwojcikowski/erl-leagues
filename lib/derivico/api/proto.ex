@@ -18,6 +18,10 @@ defmodule Derivico.Api.Msg do
 
       repeated Entry entries = 1;
     }
+    message Request {
+        required string Season = 1;
+        required string Div = 2;
+    }
   """
 end
 
@@ -39,19 +43,21 @@ defmodule Derivico.Api.Proto do
   # Handle incoming events, if the payload is the right shape, process the
   # events, otherwise return an error.
   post "/data" do
-    {status, body} =
-      case conn.body_params do
-        %{"div" => div, "season" => season} ->
-          data = Derivico.get_data(div, season)
-          proto = Derivico.Api.Proto.Encoder.data_to_proto(data)
-          {200, proto}
+    {:ok, body, conn} = Plug.Conn.read_body(conn)
+    resp =
+      case body do
+        "" ->
+          Derivico.get_data() |> Derivico.Api.Proto.Encoder.data_to_proto()
+        bin ->
+          r = Derivico.Api.Msg.Request.decode(bin)
+          Derivico.get_data(r."Div", r."Season") |> Derivico.Api.Proto.Encoder.data_to_proto()
 
-        _ ->
-          data = Derivico.get_data()
-          {200, Derivico.Api.Proto.Encoder.data_to_proto(data)}
+
       end
 
-    send_resp(conn, status, Derivico.Api.Proto.Encoder.encode(body))
+    conn
+    |> put_resp_content_type("application/x-protobuf")
+    |> send_resp(200, Derivico.Api.Proto.Encoder.encode(resp))
   end
 
   # A catchall route, 'match' will match no matter the request method,
