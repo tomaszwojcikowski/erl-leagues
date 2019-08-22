@@ -10,6 +10,11 @@ defmodule Derivico.MixProject do
       deps: deps(),
       dialyzer: [
         plt_add_deps: :transitive
+      ],
+      releases: [
+        prod: [
+          applications: [runtime_tools: :permanent]
+        ]
       ]
     ]
   end
