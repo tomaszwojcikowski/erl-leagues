@@ -19,7 +19,8 @@ defmodule Derivico.Api.Msg do
       }
 
       repeated Entry entries = 1;
-      required string timestamp = 2;
+      optional string timestamp = 2;
+      optional Request request = 3;
     }
     message Request {
         required string Season = 1;
@@ -47,16 +48,22 @@ defmodule Derivico.Api.Proto do
   # events, otherwise return an error.
   post "/data" do
     {:ok, body, conn} = Plug.Conn.read_body(conn)
+
     resp =
       case body do
         "" ->
           Derivico.get_data() |> Derivico.Api.Proto.Encoder.data_to_proto()
+
         bin ->
           r = Derivico.Api.Msg.Request.decode(bin)
-          Derivico.get_data(r."Div", r."Season") |> Derivico.Api.Proto.Encoder.data_to_proto()
 
+          msg =
+            Derivico.get_data(r."Div", r."Season") |> Derivico.Api.Proto.Encoder.data_to_proto()
 
+          %{msg | request: r}
       end
+
+    resp = resp |> Derivico.Api.Proto.Encoder.add_timestamp()
 
     conn
     |> put_resp_content_type("application/x-protobuf")
@@ -90,10 +97,13 @@ defmodule Derivico.Api.Proto.Encoder do
     }
   end
 
-  @spec data_to_proto([map]) :: Derivico.Api.Msg.Data.t()
+  @spec data_to_proto(maybe_improper_list) :: Derivico.Api.Msg.Data.t()
   def data_to_proto(data) when is_list(data) do
-    ts = DateTime.utc_now |> DateTime.to_iso8601
-    %Derivico.Api.Msg.Data{entries: Enum.map(data, &entry_to_proto/1), timestamp: ts}
+    %Derivico.Api.Msg.Data{entries: Enum.map(data, &entry_to_proto/1)}
+  end
+
+  def add_timestamp(pdata) do
+    %{pdata | timestamp: DateTime.utc_now() |> DateTime.to_iso8601()}
   end
 
   def encode(msg) do
