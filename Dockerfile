@@ -25,17 +25,18 @@ COPY . .
 RUN mix release prod
 
 # prepare release image
-FROM alpine:3
+FROM alpine:3.9
 RUN apk add --update bash openssl
 
 RUN mkdir /app && chown -R nobody: /app
 WORKDIR /app
 USER nobody
 
-COPY --from=build _build/prod/rel/derivico ./
+COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/prod ./
+COPY --from=build --chown=nobody:nobody /app/priv ./priv
 
 ENV REPLACE_OS_VARS=true
-ENV HTTP_PORT=8000 BEAM_PORT=14000 ERL_EPMD_PORT=24000
-EXPOSE $HTTP_PORT $BEAM_PORT $ERL_EPMD_PORT
+ENV JSON_PORT=8000 PROTO_PORT=8001 BEAM_PORT=14000 ERL_EPMD_PORT=24000 DATA_FILE="/app/priv/Data.csv"
+EXPOSE $JSON_PORT $PROTO_PORT $BEAM_PORT $ERL_EPMD_PORT
 
-ENTRYPOINT ["/app/bin/derivico"]
+ENTRYPOINT ["/app/bin/prod", "start"]

@@ -3,17 +3,33 @@ defmodule Derivico do
   Documentation for Derivico.
   """
   require CSV
+  require Logger
 
-  def load do
+  def load_data(path) do
     :ets.new(:data, [:named_table, :set, :public])
     :ets.new(:headers, [:named_table, :set, :public])
-    stream = File.stream!("priv/Data.csv") |> CSV.decode!()
 
+    case File.stat(path) do
+      {:ok, _} ->
+        do_load(path)
+        :ok
+
+      {:error, error} ->
+        Logger.error("data file not found #{inspect(path)}")
+        {:error, error, path}
+    end
+  end
+
+  defp do_load(path) do
+    stream = File.stream!(path) |> CSV.decode!()
+
+    # save headers in ets
     stream
     |> Stream.take(1)
     |> Stream.each(&:ets.insert(:headers, :erlang.list_to_tuple(&1)))
     |> Stream.run()
 
+    # load data into ets
     stream
     |> Stream.drop(1)
     |> Stream.each(&:ets.insert(:data, :erlang.list_to_tuple(&1)))
@@ -30,7 +46,7 @@ defmodule Derivico do
     :data |> :ets.tab2list() |> to_map
   end
 
-  # {"", "Div", "Season", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG", "HTR"}
+  # Headers: {"", "Div", "Season", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "HTHG", "HTAG", "HTR"}
   @spec get_data(binary, binary) :: [map]
   def get_data(div, season) do
     d = :ets.match_object(:data, {:_, div, season, :_, :_, :_, :_, :_, :_, :_, :_, :_})

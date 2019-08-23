@@ -6,7 +6,8 @@ defmodule Derivico.Application do
   use Application
 
   def start(_type, _args) do
-    :ok = Derivico.load()
+    path = System.get_env("DATA_FILE", "priv/Data.csv")
+    :ok = Derivico.load_data(path)
 
     children = [
       Plug.Cowboy.child_spec(
