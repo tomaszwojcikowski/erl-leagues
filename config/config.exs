@@ -3,8 +3,8 @@
 use Mix.Config
 
 config :logger,
-  backends: [{LoggerFileBackend, :error_log}]
+  backends: [:console],
+  compile_time_purge_level: :debug
 
-config :logger, :error_log,
-  path: "log/error.log",
-  level: :debug
+config :logger, :console,
+  level: :info

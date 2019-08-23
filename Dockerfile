@@ -40,3 +40,6 @@ ENV JSON_PORT=8000 PROTO_PORT=8001 BEAM_PORT=14000 ERL_EPMD_PORT=24000 DATA_FILE
 EXPOSE $JSON_PORT $PROTO_PORT $BEAM_PORT $ERL_EPMD_PORT
 
 ENTRYPOINT ["/app/bin/prod", "start"]
+
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD curl -f http://localhost:${JSON_PORT}/ping || exit 1
