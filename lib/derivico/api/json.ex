@@ -1,6 +1,5 @@
 defmodule Derivico.Api.JSON do
   require Logger
-  require Beaker
   use Plug.Router
   plug(Plug.Logger)
   # responsible for matching routes
@@ -26,7 +25,6 @@ defmodule Derivico.Api.JSON do
         _ ->
           {200, Derivico.get_data()}
       end
-    Beaker.Counter.incr("json.post")
     send_resp(conn, status, body |> Poison.encode!())
   end
 

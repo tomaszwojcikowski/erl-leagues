@@ -4,7 +4,6 @@ end
 
 defmodule Derivico.Api.Proto do
   require Logger
-  require Beaker
   use Plug.Router
   plug(Plug.Logger)
   # responsible for matching routes
@@ -39,7 +38,6 @@ defmodule Derivico.Api.Proto do
 
     resp = resp |> Derivico.Api.Proto.Encoder.add_timestamp()
 
-    Beaker.Counter.incr("proto.post")
     conn
     |> put_resp_content_type("application/x-protobuf")
     |> send_resp(200, Derivico.Api.Proto.Encoder.encode(resp))

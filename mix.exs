@@ -33,7 +33,7 @@ defmodule Derivico.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:poison, "~> 4.0"},
       {:exprotobuf, "~> 1.2"},
-      {:beaker, ">= 1.2.0"},
+      {:elixometer, "~> 1.2"},
       {:logger_file_backend, "~> 0.0.11"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
