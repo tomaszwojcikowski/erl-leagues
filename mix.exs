@@ -4,8 +4,7 @@ defmodule Derivico.MixProject do
   def project do
     [
       app: :derivico,
-      version: "0.1.0",
-      elixir: "~> 1.8",
+      version: "1.0.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
@@ -22,7 +21,7 @@ defmodule Derivico.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :exprotobuf, :logger_file_backend],
+      extra_applications: [:logger, :exprotobuf, :beaker],
       mod: {Derivico.Application, []}
     ]
   end
@@ -35,8 +34,6 @@ defmodule Derivico.MixProject do
       {:poison, "~> 4.0"},
       {:exprotobuf, "~> 1.2"},
       {:logger_file_backend, "~> 0.0.11"},
-      {:lager, ">= 3.2.1", override: true},
-      {:elixometer, "~> 1.2"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end

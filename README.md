@@ -2,6 +2,7 @@
 
 ## CSV Headers
 
+```
 Div = League Division
 Date = Match Date (dd/mm/yy)
 HomeTeam = Home Team
@@ -11,14 +12,15 @@ FTAG and AG = Full Time Away Team Goals
 FTR and Res = Full Time Result (H=Home Win, D=Draw, A=Away Win)
 HTHG = Half Time Home Team Goals
 HTAG = Half Time Away Team Goals
-HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win
+HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win)
+```
 
 ## JSON API
 
 ### Request  
 
 ``` 
-    curl -H "content-type: application/json" -d {"season":"201617", "div": "SP1"} http://localhost:8000
+curl -H "content-type: application/json" -d {"season":"201617", "div": "SP1"} http://localhost:8000
 ```
 
 ### Results   
@@ -53,7 +55,7 @@ HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win
 ### Request
 
 ``` 
-    curl -H "content-type: application/x-protobuf" -d [proto/messages.proto/Request] http://localhost:8001
+curl -H "content-type: application/x-protobuf" -d [proto/messages.proto/Request] http://localhost:8001
 ```
 
 ### Results    
@@ -73,6 +75,12 @@ HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win
     
 
 ## Building
+
+### Environment variables
+
+* `DATA_FILE` - path to CSV file with data
+* `JSON_PORT` - port to handle json API
+* `PROTO_PORT` - port to handle protobuff API
 
 ### Create release
 
@@ -95,6 +103,15 @@ make deploy
 ## Testing
 
 ``` 
-    make test
+make test
 ```
 
+## Logs
+
+```
+log/
+```
+
+## Metrics
+
+* beaker

@@ -38,7 +38,7 @@ defmodule Derivico.Api.Proto do
       end
 
     resp = resp |> Derivico.Api.Proto.Encoder.add_timestamp()
-    update_spiral("data.proto.count", 1)
+
 
     conn
     |> put_resp_content_type("application/x-protobuf")

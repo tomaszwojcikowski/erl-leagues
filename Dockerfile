@@ -19,6 +19,7 @@ ENV MIX_ENV=prod
 COPY mix.exs mix.lock ./
 COPY config ./
 RUN mix deps.get
+RUN mix test
 
 # build release
 COPY . .

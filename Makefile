@@ -2,6 +2,8 @@
 test: 
 	mix deps.get
 	mix test
+	mix dialyzer
+	mix xref
 
 .PHONY: rel
 rel:
