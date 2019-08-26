@@ -4,6 +4,7 @@ end
 
 defmodule Derivico.Api.Proto do
   require Logger
+  use Elixometer
   use Plug.Router
   plug(Plug.Logger)
   # responsible for matching routes
@@ -25,6 +26,7 @@ defmodule Derivico.Api.Proto do
     resp =
       case body do
         "" ->
+          update_spiral("proto.all", 1)
           Derivico.get_data() |> Derivico.Api.Proto.Encoder.data_to_proto()
 
         bin ->
@@ -32,12 +34,12 @@ defmodule Derivico.Api.Proto do
 
           msg =
             Derivico.get_data(r."Div", r."Season") |> Derivico.Api.Proto.Encoder.data_to_proto()
-
+          update_spiral("proto.part", 1)
           %{msg | request: r}
       end
 
     resp = resp |> Derivico.Api.Proto.Encoder.add_timestamp()
-
+    update_spiral("proto.post", 1)
     conn
     |> put_resp_content_type("application/x-protobuf")
     |> send_resp(200, Derivico.Api.Proto.Encoder.encode(resp))
