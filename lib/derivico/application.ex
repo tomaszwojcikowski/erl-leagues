@@ -7,7 +7,7 @@ defmodule Derivico.Application do
   require Logger
 
   def start(_type, _args) do
-    Logger.debug "Starting Application..."
+    Logger.debug("Starting Application...")
     path = System.get_env("DATA_FILE", "priv/Data.csv")
     :ok = Derivico.load_data(path)
 

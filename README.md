@@ -1,4 +1,6 @@
-# Derivico
+# Derivico Technical Challenge App
+
+## CSV Headers
 
 Div = League Division
 Date = Match Date (dd/mm/yy)
@@ -11,23 +13,88 @@ HTHG = Half Time Home Team Goals
 HTAG = Half Time Away Team Goals
 HTR = Half Time Result (H=Home Win, D=Draw, A=Away Win
 
-# API
+## JSON API
 
-## JSON
+### Request  
 
-    ```
-        curl -H "content-type: application/json" -d {"season":"201617", "div": "SP1"} http://localhost:8000
-    ```
+``` 
+    curl -H "content-type: application/json" -d {"season":"201617", "div": "SP1"} http://localhost:8000
+```
 
-    ```
-    ```
+### Results   
 
-## Protobuf
+``` 
+[
+    {
+        "id": "257",
+        "AwayTeam": "La Coruna",
+        "Date": "05/03/2017",
+        "Div": "SP1",
+        "FTAG": "1",
+        "FTHG": "0",
+        "FTR": "A",
+        "HTAG": "1",
+        "HTHG": "0",
+        "HTR": "A",
+        "HomeTeam": "Sp Gijon",
+        "Season": "201617"
+    }
+]
+```
 
-    ```
-        curl -H "content-type: application/x-protobuf" -d [binary] http://localhost:8001
-    ```
+    
 
-    ```
-    ```
+    
+
+## Protobuf API
+
+    
+
+### Request
+
+``` 
+    curl -H "content-type: application/x-protobuf" -d [proto/messages.proto/Request] http://localhost:8001
+```
+
+### Results    
+
+``` 
+[proto/messages.proto/Data]
+```
+
+# Requirements
+
+* Erlang 21
+* Elixir 1.9
+* Docker 18
+* mix
+* rebar3
+
+    
+
+## Building
+
+### Create release
+
+``` 
+make rel
+```
+
+### Create docker image
+
+``` 
+make docker
+```
+
+### Deploy 2 instances with HaProxy as Load Balancer
+
+``` 
+make deploy
+```
+
+## Testing
+
+``` 
+    make test
+```
 

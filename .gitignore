@@ -23,4 +23,5 @@ erl_crash.dump
 derivico-*.tar
 
 .elixir_ls/
-log/error.log
+/log/
+.formatter.exs

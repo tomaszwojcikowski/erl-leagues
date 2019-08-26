@@ -35,6 +35,8 @@ defmodule Derivico.MixProject do
       {:poison, "~> 4.0"},
       {:exprotobuf, "~> 1.2"},
       {:logger_file_backend, "~> 0.0.11"},
+      {:lager, ">= 3.2.1", override: true},
+      {:elixometer, "~> 1.2"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end

@@ -1,6 +1,7 @@
 defmodule Derivico.Api.JSON do
   require Logger
   use Plug.Router
+  use Elixometer
   plug(Plug.Logger)
   # responsible for matching routes
   plug(:match)
@@ -26,6 +27,7 @@ defmodule Derivico.Api.JSON do
           {200, Derivico.get_data()}
       end
 
+    update_spiral("data.json.count", 1)
     send_resp(conn, status, body |> Poison.encode!())
   end
 
