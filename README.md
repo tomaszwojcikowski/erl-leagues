@@ -114,4 +114,9 @@ log/
 
 ## Metrics
 
-* beaker
+* json.part
+* json.all
+* json.post
+* proto.part
+* proto.all
+* proto.post
