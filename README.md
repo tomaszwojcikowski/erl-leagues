@@ -1,4 +1,4 @@
-# Derivico Technical Challenge App
+# Technical Challenge App
 
 ## CSV Headers
 
